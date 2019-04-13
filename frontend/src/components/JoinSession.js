@@ -54,12 +54,12 @@ export class JoinSession extends Component {
                 defaultValue='Enter Session Key'
                 onChange={this.handleChange()}
                 margin="normal"
-                InputProps={{
-                    classes:{
-                        input: classes.multilinecolor,
-                        notchedoutline: classes.notchedoutline
-                    }
-                }}
+                // InputProps={{
+                //     classes:{
+                //         input: classes.multilinecolor,
+                //         notchedoutline: classes.notchedoutline
+                //     }
+                //}}
             />
             <Button 
                 variant="contained" 
@@ -73,7 +73,7 @@ export class JoinSession extends Component {
                 color="primary" 
                 className={classes.button} 
                 onClick = {this.continue}>
-                Start Coding!
+                Start Coding
             </Button>
          </React.Fragment>
       </MuiThemeProvider>
@@ -89,9 +89,9 @@ const theme = createMuiTheme({
       secondary: {
           main: '#1e88e5'
       },
-      background: {
-        default: "#000000"
-      },
+      // background: {
+      //   default: "#000000"
+      // },
     },
 });
 

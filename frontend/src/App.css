@@ -1,10 +1,9 @@
-.CodeMirror {
-  text-align: left!important;
-  
+.TextField {
+  align-self: center;
 }
 
-.StopWatch {
-  color: white;
+.CodeMirror {
+  text-align: left!important;
 }
 
 .App {

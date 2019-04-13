@@ -11,10 +11,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-import blue from '@material-ui/core/colors/blue.js';
-import grey from '@material-ui/core/colors/grey.js';
 
+import InputLabel from '@material-ui/core/InputLabel';
+import Grid from '@material-ui/core/Grid';
 import uuid from 'uuid'
+
+import axios from 'axios';
 
 export class MakeSession extends Component {
     state = {
@@ -28,6 +30,16 @@ export class MakeSession extends Component {
 
     continue = (e) => {
         e.preventDefault();
+       
+        //POST generated session key
+        console.log('Test POST')
+        const {ID} = this.state;
+        axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/postSessionKey`, {ID})
+            .then(res => {
+            console.log(res);
+            console.log(res.data);
+            })
+        
         this.props.nextStepCode();
     }
 
@@ -45,19 +57,28 @@ export class MakeSession extends Component {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <TextField
-                    style = {styles.textField}
-                    id="outlined-read-only-input"
-                    defaultValue= {sessID}
-                    margin="normal"
-                    InputProps={{
-                        classes:{
-                            readOnly: true,
-                            // input: classes.multilinecolor,
-                            // notchedoutline: classes.notchedoutline
-                        }
-                    }}
-                />
+                <InputLabel
+                    className={classes.label}
+                    >Session ID
+                </InputLabel>
+                <Grid container>
+                    <Grid item sm>
+                        <TextField
+                            style = {styles.textField}
+                            id="outlined-read-only-input"
+                            defaultValue= {sessID}
+                            margin="normal"
+                            InputProps={{
+                                classes:{
+                                    readOnly: true,
+                                    // input: classes.multilinecolor,
+                                    // notchedoutline: classes.notchedoutline
+                                }
+                            }}
+                        />
+                    </Grid>
+                </Grid>
+                    
                 <Button 
                     variant="contained" 
                     color="secondary" 
@@ -72,6 +93,7 @@ export class MakeSession extends Component {
                     onClick = {this.continue}>
                     Start Coding
                 </Button>
+                   
             </React.Fragment>
     </MuiThemeProvider>
     )
@@ -93,6 +115,9 @@ const theme = createMuiTheme({
 });
 
 const styles = theme => ({
+    label: {
+        margin: 50
+    },
     notchedoutline: {
         borderWidth: "1px",
         borderColor: "white"
@@ -116,9 +141,9 @@ const styles = theme => ({
       width: 200,
     },
     button: {
-        marginTop: 450,
+        marginTop: 375,
         marginLeft: 15,
-        marginRight: 15,
+        marginRight: 15
     },
     input: {
         display: 'none',

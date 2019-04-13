@@ -20,8 +20,6 @@ import 'codemirror/theme/material.css';
 
 //Themes
 import CssBaseline from '@material-ui/core/CssBaseline';
-import blue from '@material-ui/core/colors/blue.js';
-import grey from '@material-ui/core/colors/grey.js';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -116,7 +114,6 @@ export class CodingPage extends Component {
                       />
                     </Paper>
                   </Grid>
-                  
                   <Grid item sm>
                     <TextField
                         style = {styles.textField}
@@ -130,7 +127,6 @@ export class CodingPage extends Component {
                         variant="outlined"
                     />
                   </Grid>
-                
                 </Grid>
                 <StopWatch ref = {this.stopWatchRef}></StopWatch>
                 <Button 
@@ -168,10 +164,7 @@ const theme = createMuiTheme({
 });
 
 const styles = (theme) => ({
-  pper: {
-    ...theme.mixins.gutters(),
-  },
-    editor: {
+  editor: {
         border: 1,
         height: 'auto',
         marginLeft: 'auto !important'
