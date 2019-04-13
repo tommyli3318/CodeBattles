@@ -13,6 +13,10 @@ require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
 
 export class CodingPage extends Component {
+    constructor(props) {
+        super(props);
+        this.editorRef = React.createRef();
+      }
 
     state = {
         startValue: 'Enter solution here.',
@@ -21,15 +25,24 @@ export class CodingPage extends Component {
 
     continue = (e) => {
         e.preventDefault();
-        console.log('hi')
+        
+        console.log('Test GET')
         axios.get(`http://localhost:8000/api/CodeProblems/`)
             .then(res => {
-            const CodeProblem = res.data;
-            console.log(CodeProblem)// this.setState({ persons });
+            const codeProblem = res.data;
+            console.log(codeProblem)
+            console.log('GET Worked')
             })
-        //this.props.nextStep();
+        
+        console.log('Test POST')
+        const {submission} = this.state;
+        axios.post(`http://localhost:8000/api/CodeProblems/`, {submission})
+            .then(res => {
+            console.log(res);
+            console.log(res.data);
+            })
     }
-   
+
   render() {
     const {startValue} = this.state;
     const {mode} = this.state;
@@ -39,6 +52,7 @@ export class CodingPage extends Component {
             <React.Fragment>
                 <AppBar title = 'Code Mirror'></AppBar>
                 <CodeMirror
+                  ref = {this.editorRef}
                   style = {styles.editor}
                   value= {startValue}
                   options={{
@@ -49,6 +63,7 @@ export class CodingPage extends Component {
                     autocorrect: true
                   }}
                   onChange={(editor, data, value) => {
+                    this.setState({submission: value})
                   }}
                 />
                 <RaisedButton
