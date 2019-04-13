@@ -1,3 +1,4 @@
+import '../App.css';
 import React, { Component } from 'react'
 import StopWatch from './StopWatch'
 import axios from 'axios';
@@ -38,10 +39,6 @@ export class CodingPage extends Component {
         prompt: ''
     }
 
-    componentDidMount(){
-      this.getPrompt()
-    }
-
     getPrompt = () => {
       //GET prompt from backend
       console.log('Test GET')
@@ -76,7 +73,7 @@ export class CodingPage extends Component {
       //        console.log(res);
       //        console.log(res.data);
       //        })
-      
+      this.getPrompt()
       this.stopWatchRef.current.startTimer()
     }
 
@@ -99,7 +96,7 @@ export class CodingPage extends Component {
                 <TextField
                     style = {styles.textField}
                     id="outlined-read-only-input"
-                    defaultValue= {prompt}
+                    value= {prompt}
                     margin="normal"
                     InputProps={{
                         readOnly: true,
@@ -144,11 +141,15 @@ export class CodingPage extends Component {
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
-    secondary: grey,
-    background: {
-      default: "#000000"
-    }
+    primary: {
+        main: '#0d47a1'
+    },
+    secondary: {
+        main: '#1e88e5'
+    },
+    // background: {
+    //   default: "#000000"
+    // },
   },
 });
 

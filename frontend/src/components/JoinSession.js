@@ -54,6 +54,12 @@ export class JoinSession extends Component {
                 defaultValue='Enter Session Key'
                 onChange={this.handleChange()}
                 margin="normal"
+                InputProps={{
+                    classes:{
+                        input: classes.multilinecolor,
+                        notchedoutline: classes.notchedoutline
+                    }
+                }}
             />
             <Button 
                 variant="contained" 
@@ -77,15 +83,26 @@ export class JoinSession extends Component {
 
 const theme = createMuiTheme({
     palette: {
-      primary: blue,
-      secondary: grey,
+      primary: {
+          main: '#0d47a1'
+      },
+      secondary: {
+          main: '#1e88e5'
+      },
       background: {
         default: "#000000"
-      }
+      },
     },
 });
 
 const styles = theme => ({
+    notchedoutline: {
+        borderWidth: "1px",
+        borderColor: "white"
+    },
+    multilinecolor: {
+        color: "white"
+    },
     container: {
       display: 'flex',
       flexWrap: 'wrap',

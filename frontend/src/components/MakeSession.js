@@ -46,18 +46,17 @@ export class MakeSession extends Component {
                     </Toolbar>
                 </AppBar>
                 <TextField
-                   
                     style = {styles.textField}
-                    label='Session Key'
                     id="outlined-read-only-input"
                     defaultValue= {sessID}
                     margin="normal"
                     InputProps={{
-                        readOnly: true,
-                        input: classes.multilinecolor,
-                        notchedOutline: classes.notchedoutline
+                        classes:{
+                            readOnly: true,
+                            // input: classes.multilinecolor,
+                            // notchedoutline: classes.notchedoutline
+                        }
                     }}
-                    variant="outlined"
                 />
                 <Button 
                     variant="contained" 
@@ -68,10 +67,10 @@ export class MakeSession extends Component {
                 </Button>
                 <Button 
                     variant="contained" 
-                    color="primary" 
+                    color="secondary" 
                     className={classes.button} 
                     onClick = {this.continue}>
-                    Start Coding!
+                    Start Coding
                 </Button>
             </React.Fragment>
     </MuiThemeProvider>
@@ -81,10 +80,14 @@ export class MakeSession extends Component {
 
 const theme = createMuiTheme({
     palette: {
-      primary: blue,
-      secondary: grey,
+      primary: {
+          main: '#0d47a1'
+      },
+      secondary: {
+          main: '#1e88e5'
+      },
       background: {
-        default: "#000000"
+        default: "#ffffff"
       },
     },
 });
@@ -92,7 +95,7 @@ const theme = createMuiTheme({
 const styles = theme => ({
     notchedoutline: {
         borderWidth: "1px",
-        borderColor: "yellow !important"
+        borderColor: "white"
     },
     multilinecolor: {
         color: "white"
@@ -102,8 +105,9 @@ const styles = theme => ({
       flexWrap: 'wrap',
     },
     textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+        marginTop: 200,
+        marginLeft: 15,
+        marginRight: 15,
     },
     dense: {
       marginTop: 16,
@@ -112,7 +116,9 @@ const styles = theme => ({
       width: 200,
     },
     button: {
-        margin: theme.spacing.unit,
+        marginTop: 450,
+        marginLeft: 15,
+        marginRight: 15,
     },
     input: {
         display: 'none',

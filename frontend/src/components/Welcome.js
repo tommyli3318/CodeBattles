@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
+import { generateKeyPair } from 'crypto';
 
 export class Welcome extends Component {
 
@@ -47,7 +48,7 @@ export class Welcome extends Component {
             </Button>
             <Button 
                 variant="contained" 
-                color="primary" 
+                color="secondary" 
                 className={classes.button} 
                 onClick = {this.continueteCreate}>
                 Make a Session
@@ -60,17 +61,20 @@ export class Welcome extends Component {
 
 const theme = createMuiTheme({
     palette: {
-      primary: blue,
-      secondary: grey,  
-      background: {
-        default: "#000000"
+      primary: {
+          main: '#0d47a1'
+      },
+      secondary: {
+          main: '#1e88e5'
       },
     },
-  });
+});
 
 const styles = theme => ({
     button: {
-      margin: theme.spacing.unit,
+      marginTop: 450,
+      marginLeft: 15,
+      marginRight: 15,
     },
     input: {
       display: 'none',
