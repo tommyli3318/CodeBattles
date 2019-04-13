@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 //import all other components to display
 import CodingPage from './CodingPage'
+import Welcome from './Welcome'
 
 export class ViewSelector extends Component {
     state = {
@@ -27,6 +28,12 @@ export class ViewSelector extends Component {
 
     switch(step){
         case 0:
+            return (
+               <Welcome
+               nextStep = {this.nextStep}
+               ></Welcome>
+            )
+        case 1:
             return (
                <CodingPage
                prevStep = {this.prevStep}

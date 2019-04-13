@@ -28,7 +28,7 @@ export class CodingPage extends Component {
         submission: ''
     }
 
-    continue = (e) => {
+    submit = (e) => {
         e.preventDefault();
         
         console.log('Test GET')
@@ -95,7 +95,7 @@ export class CodingPage extends Component {
                     label = 'Submit Solution'
                     primary = {true}
                     style = {styles.button}
-                    onClick = {this.continue}
+                    onClick = {this.submit}
                 ></RaisedButton>
             </React.Fragment>
         </MuiThemeProvider>
