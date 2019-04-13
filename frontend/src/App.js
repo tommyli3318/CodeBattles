@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import CodingPage from './components/CodingPage'
+import ViewSelector from './components/ViewSelector'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-       <CodingPage></CodingPage>
+       <ViewSelector></ViewSelector>
       </div>
     );
   }

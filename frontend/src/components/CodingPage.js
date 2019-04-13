@@ -23,7 +23,7 @@ export class CodingPage extends Component {
       }
 
     state = {
-        startValue: 'Enter solution here.',
+        startValue: "'Enter solution here.'",
         mode: 'python',
         submission: ''
     }
@@ -32,14 +32,7 @@ export class CodingPage extends Component {
         e.preventDefault();
         
         console.log('Test GET')
-
-        var config = {
-          headers: {'Access-Control-Allow-Origin': 'http://localhost:3000/'},
-          crossdomain: true
-        };
-
-        axios.get(`https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem
-        `, config)
+        axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`)
             .then(res => {
             const codeProblem = res.data;
             console.log(codeProblem)
@@ -68,7 +61,7 @@ export class CodingPage extends Component {
     return (
         <MuiThemeProvider>
             <React.Fragment>
-                <AppBar title = 'Code Mirror'></AppBar>
+                <AppBar title = 'Code Battles'></AppBar>
                 <TextField
                   style = {styles.textField}
                   id="standard-textarea"
