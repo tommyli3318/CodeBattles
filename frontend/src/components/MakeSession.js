@@ -53,7 +53,7 @@ export class MakeSession extends Component {
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="title" color="inherit">
-                        Coding Battles
+                        Code Battle
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -130,7 +130,7 @@ const styles = theme => ({
       flexWrap: 'wrap',
     },
     textField: {
-        marginTop: 200,
+        marginTop: 20,
         marginLeft: 15,
         marginRight: 15,
     },

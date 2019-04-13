@@ -91,7 +91,7 @@ export class CodingPage extends Component {
                 <AppBar position="static">
                       <Toolbar>
                           <Typography variant="title" color="inherit">
-                          Coding Battles
+                          Code Battle
                           </Typography>
                       </Toolbar>
                 </AppBar>
@@ -122,7 +122,8 @@ export class CodingPage extends Component {
                         margin="normal"
                         InputProps={{
                             readOnly: true,
-                            multiline: true
+                            multiline: true,
+                            rows: 12
                         }}
                         variant="outlined"
                     />

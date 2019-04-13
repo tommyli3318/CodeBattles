@@ -35,7 +35,7 @@ export class Welcome extends Component {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="title" color="inherit">
-                    Coding Battles
+                    Code Battle
                     </Typography>
                 </Toolbar>
             </AppBar>

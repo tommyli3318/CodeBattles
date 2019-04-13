@@ -14,6 +14,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
 
+import Grid from '@material-ui/core/Grid';
+
 export class JoinSession extends Component {
      state = {
         sessionKey: ''
@@ -44,23 +46,27 @@ export class JoinSession extends Component {
             <AppBar position="static">
                     <Toolbar>
                         <Typography variant="title" color="inherit">
-                        Coding Battles
+                        Code Battle
                         </Typography>
                     </Toolbar>
             </AppBar>
-            <TextField
-                id="standard-name"
-                className={classes.textField}
-                defaultValue='Enter Session Key'
-                onChange={this.handleChange()}
-                margin="normal"
-                // InputProps={{
-                //     classes:{
-                //         input: classes.multilinecolor,
-                //         notchedoutline: classes.notchedoutline
-                //     }
-                //}}
-            />
+            <Grid container>
+              <Grid item sm>
+                <TextField
+                    id="standard-name"
+                    className={classes.textField}
+                    defaultValue='Enter Session Key'
+                    onChange={this.handleChange()}
+                    margin="normal"
+                    // InputProps={{
+                    //     classes:{
+                    //         input: classes.multilinecolor,
+                    //         notchedoutline: classes.notchedoutline
+                    //     }
+                    //}}
+                />
+                </Grid>
+            </Grid>
             <Button 
                 variant="contained" 
                 color="secondary" 
@@ -108,6 +114,7 @@ const styles = theme => ({
       flexWrap: 'wrap',
     },
     textField: {
+      marginTop: 30,
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
     },
@@ -118,7 +125,9 @@ const styles = theme => ({
       width: 200,
     },
     button: {
-        margin: theme.spacing.unit,
+      marginTop: 390,
+      marginLeft: 15,
+      marginRight: 15
     },
     input: {
         display: 'none',
