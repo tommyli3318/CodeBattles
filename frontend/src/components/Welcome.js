@@ -70,7 +70,7 @@ const theme = createMuiTheme({
 
 const styles = theme => ({
     button: {
-      marginTop: 300,
+      marginTop: 250,
       marginLeft: 15,
       marginRight: 15,
     },
