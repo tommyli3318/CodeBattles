@@ -18,9 +18,13 @@ import {UnControlled as CodeMirror} from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
+//Themes
 import CssBaseline from '@material-ui/core/CssBaseline';
 import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
+
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
@@ -93,31 +97,41 @@ export class CodingPage extends Component {
                           </Typography>
                       </Toolbar>
                 </AppBar>
-                <TextField
-                    style = {styles.textField}
-                    id="outlined-read-only-input"
-                    value= {prompt}
-                    margin="normal"
-                    InputProps={{
-                        readOnly: true,
-                        multiline: true
-                    }}
-                    variant="outlined"
-                />
-                <CodeMirror
-                  style = {styles.editor}
-                  value= {startValue}
-                  options={{
-                    mode: mode,
-                    theme: 'material',
-                    lineNumbers: true,
-                    smartIndent: true,
-                    autocorrect: true
-                  }}
-                  onChange={(editor, data, value) => {
-                    this.setState({submission: value})
-                  }}
-                />
+                <Grid container>
+                  <Grid item sm>
+                    <Paper elevation={6}>
+                      <CodeMirror
+                        style = {styles.editor}
+                        value= {startValue}
+                        options={{
+                          mode: mode,
+                          theme: 'material',
+                          lineNumbers: true,
+                          smartIndent: true,
+                          autocorrect: true
+                        }}
+                        onChange={(editor, data, value) => {
+                          this.setState({submission: value})
+                        }}
+                      />
+                    </Paper>
+                  </Grid>
+                  
+                  <Grid item sm>
+                    <TextField
+                        style = {styles.textField}
+                        id="outlined-read-only-input"
+                        value= {prompt}
+                        margin="normal"
+                        InputProps={{
+                            readOnly: true,
+                            multiline: true
+                        }}
+                        variant="outlined"
+                    />
+                  </Grid>
+                
+                </Grid>
                 <StopWatch ref = {this.stopWatchRef}></StopWatch>
                 <Button 
                     variant="contained" 
@@ -154,6 +168,9 @@ const theme = createMuiTheme({
 });
 
 const styles = (theme) => ({
+  pper: {
+    ...theme.mixins.gutters(),
+  },
     editor: {
         border: 1,
         height: 'auto',
