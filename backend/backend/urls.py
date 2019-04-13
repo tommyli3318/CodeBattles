@@ -21,7 +21,11 @@ from cbServer import views                            # added
 router2 = routers.DefaultRouter()                      # added
 router2.register(r'CodeProblems', views.cbServerView, 'cbsServer')     # added
 
+router3 = routers.DefaultRouter()                      # added
+router3.register(r'Solutions', views.cbServerView, 'solutions')     # added
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router2.urls)),
+    path('api/post/', include(router3.urls)),
 ]

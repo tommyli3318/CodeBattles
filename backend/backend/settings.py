@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'cbServer', # added
     'corsheaders', # added
     'rest_framework', # added
+    'solutions', # added
 ]
 
 MIDDLEWARE = [
