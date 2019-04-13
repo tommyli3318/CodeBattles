@@ -27,25 +27,35 @@ export class CodingPage extends Component {
     constructor(props) {
         super(props);
         this.stopWatchRef = React.createRef();
-      }
+    }
 
     state = {
         startValue: "'Enter solution here.'",
         mode: 'python',
-        submission: ''
+        submission: '',
+        status: 'notReady',
+        prompt: ''
+    }
+
+    componentDidMount(){
+      this.getPrompt()
+    }
+
+    getPrompt = () => {
+      //GET prompt from backend
+      console.log('Test GET')
+        axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`)
+            .then(res => {
+            const codeProblem = res.data;
+            console.log(codeProblem['body'])
+            console.log('GET Worked')
+            this.setState({prompt: codeProblem['body']})
+            })
     }
 
     submit = (e) => {
         e.preventDefault();
-        
-        console.log('Test GET')
-        axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`)
-            .then(res => {
-            const codeProblem = res.data;
-            console.log(codeProblem)
-            console.log('GET Worked')
-            })
-        
+        //POST code submission to Backend
         // console.log('Test POST')
         // const {submission} = this.state;
         // console.log({submission})
@@ -56,8 +66,18 @@ export class CodingPage extends Component {
         //     })
     }
 
-    startTimer = (e) => {
+    startSession = (e) => {
       e.preventDefault();
+      // //POST 'Ready' to backend to start coding
+      // this.setState({status: 'Ready'})
+      // const {status} = this.state
+      // axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`, 
+      //   {status})
+      //        .then(res => {
+      //        console.log(res);
+      //        console.log(res.data);
+      //        })
+      
       this.stopWatchRef.current.startTimer()
     }
 
@@ -65,6 +85,7 @@ export class CodingPage extends Component {
     const {startValue} = this.state;
     const {mode} = this.state;
     const { classes } = this.props;
+    const {prompt} = this.state;
     return (
         <MuiThemeProvider theme = {theme}>
             <React.Fragment>
@@ -78,10 +99,11 @@ export class CodingPage extends Component {
                 <TextField
                     style = {styles.textField}
                     id="outlined-read-only-input"
-                    defaultValue="Prompt"
+                    defaultValue= {prompt}
                     margin="normal"
                     InputProps={{
                         readOnly: true,
+                        multiline: true
                     }}
                     variant="outlined"
                 />
@@ -104,7 +126,7 @@ export class CodingPage extends Component {
                     variant="contained" 
                     color="secondary" 
                     className={classes.button}
-                    onClick = {this.startTimer}>
+                    onClick = {this.startSession}>
                     Ready Up
                 </Button>
                 <Button 

@@ -14,7 +14,7 @@ import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
 
 export class JoinSession extends Component {
-    state = {
+     state = {
         sessionKey: ''
     }
 
@@ -25,12 +25,13 @@ export class JoinSession extends Component {
 
     continue = (e) => {
         e.preventDefault();
+        //POST key user entered to backend
+        console.log(this.state.sessionKey)
         this.props.nextStepCode();
     }
     
     handleChange = () => event => {
         this.setState({ sessionKey: event.target.value });
-        console.log(event.target.value)
     };
 
   render() {
@@ -48,23 +49,23 @@ export class JoinSession extends Component {
             <TextField
                 id="standard-name"
                 className={classes.textField}
-                value='Enter Session Key'
+                defaultValue='Enter Session Key'
                 onChange={this.handleChange()}
                 margin="normal"
             />
             <Button 
-                    variant="contained" 
-                    color="secondary" 
-                    className={classes.button}
-                    onClick = {this.goBack}>
-                    Back
+                variant="contained" 
+                color="secondary" 
+                className={classes.button}
+                onClick = {this.goBack}>
+                Back
             </Button>
             <Button 
-                    variant="contained" 
-                    color="primary" 
-                    className={classes.button} 
-                    onClick = {this.continue}>
-                    Start Coding!
+                variant="contained" 
+                color="primary" 
+                className={classes.button} 
+                onClick = {this.continue}>
+                Start Coding!
             </Button>
          </React.Fragment>
       </MuiThemeProvider>
