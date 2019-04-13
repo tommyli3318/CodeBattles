@@ -22,10 +22,10 @@ export class CodingPage extends Component {
     continue = (e) => {
         e.preventDefault();
         console.log('hi')
-        axios.get(`ENTER URL HERE`)
+        axios.get(`http://localhost:8000/api/CodeProblems/`)
             .then(res => {
-            const persons = res.data;
-            this.setState({ persons });
+            const CodeProblem = res.data;
+            console.log(CodeProblem)// this.setState({ persons });
             })
         //this.props.nextStep();
     }
