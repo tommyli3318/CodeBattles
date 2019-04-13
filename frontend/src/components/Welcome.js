@@ -38,7 +38,7 @@ export class Welcome extends Component {
             </AppBar>
             <Button 
                 variant="contained" 
-                color="secondary" 
+                color="primary" 
                 className={classes.button}
                 onClick = {this.continueteJoin}>
                 Join a Session

@@ -69,17 +69,17 @@ export class JoinSession extends Component {
             <Button 
                 variant="contained" 
                 color="secondary" 
-                className={classes.button}
-                onClick = {this.goBack}>
-                Back
-            </Button>
-            
-            <Button 
-                variant="contained" 
-                color="primary" 
                 className={classes.button} 
                 onClick = {this.continue}>
                 Start Coding
+            </Button>
+
+            <Button 
+                variant="contained" 
+                color="primary" 
+                className={classes.button}
+                onClick = {this.goBack}>
+                Back
             </Button>
          </React.Fragment>
       </MuiThemeProvider>

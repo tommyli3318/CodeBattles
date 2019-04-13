@@ -36,7 +36,8 @@ export class CodingPage extends Component {
         mode: 'python',
         submission: '',
         status: 'notReady',
-        prompt: ''
+        prompt: '',
+        promptID: -1
     }
 
     getPrompt = () => {
@@ -45,13 +46,15 @@ export class CodingPage extends Component {
             .then(res => {
             const codeProblem = res.data;
             console.log(codeProblem['body'])
+            console.log(typeof codeProblem['body'])
             this.setState({prompt: codeProblem['body']})
+            //this.setState({prompt: codeProblem['body']})
             })
     }
 
     startSession = (e) => {
       e.preventDefault();
-      // //POST 'Ready' to backend to start coding
+      console.log('POST Ready to backend to start coding')
       // this.setState({status: 'Ready'})
       // const {status} = this.state
       // axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`, 
@@ -68,8 +71,28 @@ export class CodingPage extends Component {
         e.preventDefault();
         console.log('POST Code Submission')
         const {submission} = this.state;
-        axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/checkSolution`, 
-        {code: submission, roomID: this.props.roomID, problem: 'Greatest Value'})
+        console.log({submission})
+
+        const judgeParams = {
+            "source_code": submission,
+            "language_id": "34", 
+            "number_of_runs": "1",
+            "stdin": "[10,2,129,3,5]",
+            "expected_output": "hi",
+            "cpu_time_limit": "2",
+            "cpu_extra_time": "0.5",
+            "wall_time_limit": "5",
+            "memory_limit": "128000",
+            "stack_limit": "64000",
+            "max_processes_and_or_threads": "30",
+            "enable_per_process_and_thread_time_limit": "false",
+            "enable_per_process_and_thread_memory_limit": "true",
+            "max_file_size": "1024"
+          }
+      
+        //console.log(submission)
+        axios.post("https://api.judge0.com/submissions?wait=true", 
+        judgeParams)
             .then(res => {
             console.log(res);
             console.log(res.data);
@@ -109,6 +132,7 @@ export class CodingPage extends Component {
                           autocorrect: true
                         }}
                         onChange={(editor, data, value) => {
+                          
                           this.setState({submission: value})
                         }}
                       />
@@ -135,7 +159,7 @@ export class CodingPage extends Component {
                 
                 <Button 
                     variant="contained" 
-                    color="secondary" 
+                    color="primary" 
                     className={classes.button}
                     onClick = {this.startSession}>
                     Ready Up
@@ -143,7 +167,7 @@ export class CodingPage extends Component {
                 
                 <Button 
                     variant="contained" 
-                    color="primary" 
+                    color="secondary" 
                     className={classes.button} 
                     onClick = {this.submit}>
                     Submit

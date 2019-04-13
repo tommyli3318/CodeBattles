@@ -86,7 +86,7 @@ export class MakeSession extends Component {
                     
                 <Button 
                     variant="contained" 
-                    color="secondary" 
+                    color="primary" 
                     className={classes.button}
                     onClick = {this.goBack}>
                     Back
