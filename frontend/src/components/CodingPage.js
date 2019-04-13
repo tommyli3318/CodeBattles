@@ -9,6 +9,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
 import axios from 'axios';
+
 require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
 
@@ -21,6 +22,7 @@ export class CodingPage extends Component {
     state = {
         startValue: 'Enter solution here.',
         mode: 'python',
+        submission: ''
     }
 
     continue = (e) => {
@@ -36,6 +38,7 @@ export class CodingPage extends Component {
         
         console.log('Test POST')
         const {submission} = this.state;
+        console.log({submission})
         axios.post(`http://localhost:8000/api/CodeProblems/`, {submission})
             .then(res => {
             console.log(res);
@@ -46,7 +49,7 @@ export class CodingPage extends Component {
   render() {
     const {startValue} = this.state;
     const {mode} = this.state;
-
+    
     return (
         <MuiThemeProvider>
             <React.Fragment>
@@ -56,7 +59,7 @@ export class CodingPage extends Component {
                   style = {styles.editor}
                   value= {startValue}
                   options={{
-                    mode: {mode},
+                    mode: mode,
                     theme: 'material',
                     lineNumbers: true,
                     smartIndent: true,
