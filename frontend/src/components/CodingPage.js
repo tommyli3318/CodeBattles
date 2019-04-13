@@ -17,6 +17,7 @@ import {UnControlled as CodeMirror} from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
 import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
 
@@ -48,7 +49,6 @@ export class CodingPage extends Component {
             .then(res => {
             const codeProblem = res.data;
             console.log(codeProblem['body'])
-            console.log('GET Worked')
             this.setState({prompt: codeProblem['body']})
             })
     }
@@ -56,14 +56,13 @@ export class CodingPage extends Component {
     submit = (e) => {
         e.preventDefault();
         //POST code submission to Backend
-        // console.log('Test POST')
-        // const {submission} = this.state;
-        // console.log({submission})
-        // axios.post(`http://localhost:8000/api/CodeProblems/`, {submission})
-        //     .then(res => {
-        //     console.log(res);
-        //     console.log(res.data);
-        //     })
+        console.log('Test POST')
+        const {submission} = this.state;
+        axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/checkSolution`, {submission})
+            .then(res => {
+            console.log(res);
+            console.log(res.data);
+            })
     }
 
     startSession = (e) => {
@@ -88,6 +87,7 @@ export class CodingPage extends Component {
     const {prompt} = this.state;
     return (
         <MuiThemeProvider theme = {theme}>
+            <CssBaseline></CssBaseline>
             <React.Fragment>
                 <AppBar position="static">
                       <Toolbar>
@@ -145,14 +145,18 @@ export class CodingPage extends Component {
 const theme = createMuiTheme({
   palette: {
     primary: blue,
-    secondary: grey
+    secondary: grey,
+    background: {
+      default: "#000000"
+    }
   },
 });
 
 const styles = (theme) => ({
     editor: {
         border: 1,
-        height: 'auto'
+        height: 'auto',
+        marginLeft: 'auto !important'
     },
     textField: {
       width: 200,

@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
 import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
 
@@ -35,6 +36,7 @@ export class MakeSession extends Component {
     const {sessID} = this.state;
     return (
         <MuiThemeProvider theme = {theme}>
+            <CssBaseline></CssBaseline>
             <React.Fragment>
                 <AppBar position="static">
                     <Toolbar>
@@ -44,6 +46,7 @@ export class MakeSession extends Component {
                     </Toolbar>
                 </AppBar>
                 <TextField
+                   
                     style = {styles.textField}
                     label='Session Key'
                     id="outlined-read-only-input"
@@ -51,6 +54,8 @@ export class MakeSession extends Component {
                     margin="normal"
                     InputProps={{
                         readOnly: true,
+                        input: classes.multilinecolor,
+                        notchedOutline: classes.notchedoutline
                     }}
                     variant="outlined"
                 />
@@ -77,11 +82,21 @@ export class MakeSession extends Component {
 const theme = createMuiTheme({
     palette: {
       primary: blue,
-      secondary: grey
+      secondary: grey,
+      background: {
+        default: "#000000"
+      },
     },
 });
 
 const styles = theme => ({
+    notchedoutline: {
+        borderWidth: "1px",
+        borderColor: "yellow !important"
+    },
+    multilinecolor: {
+        color: "white"
+    },
     container: {
       display: 'flex',
       flexWrap: 'wrap',

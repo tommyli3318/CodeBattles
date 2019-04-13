@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
 import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
 
@@ -28,6 +29,7 @@ export class Welcome extends Component {
     const { classes } = this.props;
     return (
       <MuiThemeProvider theme = {theme}>
+          <CssBaseline></CssBaseline>
           <React.Fragment>
             <AppBar position="static">
                 <Toolbar>
@@ -59,7 +61,10 @@ export class Welcome extends Component {
 const theme = createMuiTheme({
     palette: {
       primary: blue,
-      secondary: grey
+      secondary: grey,  
+      background: {
+        default: "#000000"
+      },
     },
   });
 
