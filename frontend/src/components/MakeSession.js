@@ -13,7 +13,12 @@ import { withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
 
+import uuid from 'uuid'
+
 export class MakeSession extends Component {
+    state = {
+        sessID: uuid()
+    }
 
     goBack = (e) => {
         e.preventDefault();
@@ -27,6 +32,7 @@ export class MakeSession extends Component {
 
   render() {
     const { classes } = this.props;
+    const {sessID} = this.state;
     return (
         <MuiThemeProvider theme = {theme}>
             <React.Fragment>
@@ -39,8 +45,9 @@ export class MakeSession extends Component {
                 </AppBar>
                 <TextField
                     style = {styles.textField}
+                    label='Session Key'
                     id="outlined-read-only-input"
-                    defaultValue="Session Key"
+                    defaultValue= {sessID}
                     margin="normal"
                     InputProps={{
                         readOnly: true,
