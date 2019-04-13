@@ -14,9 +14,14 @@ import grey from '@material-ui/core/colors/grey.js';
 
 export class Welcome extends Component {
 
-    continue = (e) => {
+    continueteCreate = (e) => {
         e.preventDefault();
-        this.props.nextStep();
+        this.props.nextStepCreate();
+    }
+
+    continueteJoin = (e) => {
+        e.preventDefault();
+        this.props.nextStepJoin();
     }
 
   render() {
@@ -35,14 +40,14 @@ export class Welcome extends Component {
                 variant="contained" 
                 color="secondary" 
                 className={classes.button}
-                onClick = {this.continue}>
+                onClick = {this.continueteJoin}>
                 Join a Session
             </Button>
             <Button 
                 variant="contained" 
                 color="primary" 
                 className={classes.button} 
-                onClick = {this.continue}>
+                onClick = {this.continueteCreate}>
                 Make a Session
             </Button>
           </React.Fragment>

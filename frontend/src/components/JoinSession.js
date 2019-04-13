@@ -13,7 +13,10 @@ import { withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue.js';
 import grey from '@material-ui/core/colors/grey.js';
 
-export class MakeSession extends Component {
+export class JoinSession extends Component {
+    state = {
+        sessionKey: ''
+    }
 
     goBack = (e) => {
         e.preventDefault();
@@ -24,45 +27,47 @@ export class MakeSession extends Component {
         e.preventDefault();
         this.props.nextStepCode();
     }
+    
+    handleChange = () => event => {
+        this.setState({ sessionKey: event.target.value });
+        console.log(event.target.value)
+    };
 
   render() {
     const { classes } = this.props;
     return (
-        <MuiThemeProvider theme = {theme}>
-            <React.Fragment>
-                <AppBar position="static">
+      <MuiThemeProvider theme = {theme}>
+         <React.Fragment>
+            <AppBar position="static">
                     <Toolbar>
                         <Typography variant="title" color="inherit">
                         Coding Battles
                         </Typography>
                     </Toolbar>
-                </AppBar>
-                <TextField
-                    style = {styles.textField}
-                    id="outlined-read-only-input"
-                    defaultValue="Session Key"
-                    margin="normal"
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                    variant="outlined"
-                />
-                <Button 
+            </AppBar>
+            <TextField
+                id="standard-name"
+                className={classes.textField}
+                value='Enter Session Key'
+                onChange={this.handleChange()}
+                margin="normal"
+            />
+            <Button 
                     variant="contained" 
                     color="secondary" 
                     className={classes.button}
                     onClick = {this.goBack}>
                     Back
-                </Button>
-                <Button 
+            </Button>
+            <Button 
                     variant="contained" 
                     color="primary" 
                     className={classes.button} 
                     onClick = {this.continue}>
                     Start Coding!
-                </Button>
-            </React.Fragment>
-    </MuiThemeProvider>
+            </Button>
+         </React.Fragment>
+      </MuiThemeProvider>
     )
   }
 }
@@ -97,8 +102,9 @@ const styles = theme => ({
     }
   });
 
-MakeSession.propTypes = {
+JoinSession.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MakeSession);
+
+export default withStyles(styles)(JoinSession)
