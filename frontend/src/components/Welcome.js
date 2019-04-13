@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import logo from '../CodeBattle-02.png'
 
 //MUI
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles'
@@ -8,17 +9,16 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 export class Welcome extends Component {
 
-    continueteCreate = (e) => {
+    continueCreate = (e) => {
         e.preventDefault();
         this.props.nextStepCreate();
     }
 
-    continueteJoin = (e) => {
+    continueJoin = (e) => {
         e.preventDefault();
         this.props.nextStepJoin();
     }
@@ -36,18 +36,19 @@ export class Welcome extends Component {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            <img src = {logo} className = 'App-logo' alt = 'logo'/>
             <Button 
                 variant="contained" 
                 color="primary" 
                 className={classes.button}
-                onClick = {this.continueteJoin}>
+                onClick = {this.continueJoin}>
                 Join a Session
             </Button>
             <Button 
                 variant="contained" 
                 color="secondary" 
                 className={classes.button} 
-                onClick = {this.continueteCreate}>
+                onClick = {this.continueCreate}>
                 Make a Session
             </Button>
           </React.Fragment>
@@ -59,7 +60,7 @@ export class Welcome extends Component {
 const theme = createMuiTheme({
     palette: {
       primary: {
-          main: '#0d47a1'
+          main: '#6a1b9a'
       },
       secondary: {
           main: '#1e88e5'
@@ -69,7 +70,7 @@ const theme = createMuiTheme({
 
 const styles = theme => ({
     button: {
-      marginTop: 450,
+      marginTop: 300,
       marginLeft: 15,
       marginRight: 15,
     },

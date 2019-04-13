@@ -181,7 +181,7 @@ export class CodingPage extends Component {
 const theme = createMuiTheme({
   palette: {
     primary: {
-        main: '#0d47a1'
+        main: '#6a1b9a'
     },
     secondary: {
         main: '#1e88e5'

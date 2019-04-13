@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 //MUI
+// url("./webfonts_Yantramanav-Light/") format("opentype"),
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -109,7 +110,7 @@ export class MakeSession extends Component {
 const theme = createMuiTheme({
     palette: {
       primary: {
-          main: '#0d47a1'
+          main: '#6a1b9a'
       },
       secondary: {
           main: '#1e88e5'
