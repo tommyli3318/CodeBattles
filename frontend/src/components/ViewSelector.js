@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 
 //import all other components to display
-import CodingPage from './CodingPage'
 import Welcome from './Welcome'
+import MakeSession from './MakeSession'
+import CodingPage from './CodingPage'
 
 export class ViewSelector extends Component {
     state = {
@@ -34,6 +35,13 @@ export class ViewSelector extends Component {
                ></Welcome>
             )
         case 1:
+            return (
+               <MakeSession
+               prevStep = {this.prevStep}
+               nextStep = {this.nextStep}
+               ></MakeSession>
+            )
+        case 2:
             return (
                <CodingPage
                prevStep = {this.prevStep}

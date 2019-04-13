@@ -3,10 +3,14 @@ import StopWatch from './StopWatch'
 import axios from 'axios';
 
 //MUI
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import AppBar from 'material-ui/AppBar'
-import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField';
+import {MuiThemeProvider} from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 //Code Editor
 import {UnControlled as CodeMirror} from 'react-codemirror2'
@@ -57,18 +61,26 @@ export class CodingPage extends Component {
   render() {
     const {startValue} = this.state;
     const {mode} = this.state;
-    
+    const { classes } = this.props;
     return (
         <MuiThemeProvider>
             <React.Fragment>
-                <AppBar title = 'Code Battles'></AppBar>
+                <AppBar position="static">
+                      <Toolbar>
+                          <Typography variant="title" color="inherit">
+                          Coding Battles
+                          </Typography>
+                      </Toolbar>
+                </AppBar>
                 <TextField
-                  style = {styles.textField}
-                  id="standard-textarea"
-                  label="With placeholder multiline"
-                  placeholder="Prompt"
-                  multiline ='true'
-                  margin="small"
+                    style = {styles.textField}
+                    id="outlined-read-only-input"
+                    defaultValue="Prompt"
+                    margin="normal"
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                    variant="outlined"
                 />
                 <CodeMirror
                   style = {styles.editor}
@@ -85,36 +97,45 @@ export class CodingPage extends Component {
                   }}
                 />
                 <StopWatch ref = {this.stopWatchRef}></StopWatch>
-                <RaisedButton
-                    label = 'Ready Up'
-                    primary = {false}
-                    style = {styles.button}
-                    onClick = {this.startTimer}
-                ></RaisedButton>
-                <RaisedButton
-                    label = 'Submit Solution'
-                    primary = {true}
-                    style = {styles.button}
-                    onClick = {this.submit}
-                ></RaisedButton>
+                <Button 
+                    variant="contained" 
+                    color="secondary" 
+                    className={classes.button}
+                    onClick = {this.startTimer}>
+                    Ready Up
+                </Button>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    className={classes.button} 
+                    onClick = {this.submit}>
+                    Submit
+                </Button>
             </React.Fragment>
         </MuiThemeProvider>
     )
   }
 }
 
-const styles = {
+const styles = (theme) => ({
     editor: {
         border: 1,
         height: 'auto'
-    },
-    button: {
-        margin: 15
     },
     textField: {
       width: 200,
       height: 100
     },
-}
+    button: {
+      margin: theme.spacing.unit,
+    },
+    input: {
+      display: 'none',
+    }
+})
 
-export default CodingPage
+CodingPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CodingPage)
