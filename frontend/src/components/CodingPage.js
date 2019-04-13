@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
+import StopWatch from './StopWatch'
+import axios from 'axios';
+
+//MUI
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField';
 
-//Text Editor
+//Code Editor
 import {UnControlled as CodeMirror} from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
-
-import axios from 'axios';
-
-import StopWatch from './StopWatch'
 
 require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
@@ -33,7 +34,8 @@ export class CodingPage extends Component {
         console.log('Test GET')
 
         var config = {
-          headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'}
+          headers: {'Access-Control-Allow-Origin': 'http://localhost:3000/'},
+          crossdomain: true
         };
 
         axios.get(`https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem
@@ -67,6 +69,14 @@ export class CodingPage extends Component {
         <MuiThemeProvider>
             <React.Fragment>
                 <AppBar title = 'Code Mirror'></AppBar>
+                <TextField
+                  style = {styles.textField}
+                  id="standard-textarea"
+                  label="With placeholder multiline"
+                  placeholder="Prompt"
+                  multiline ='true'
+                  margin="small"
+                />
                 <CodeMirror
                   style = {styles.editor}
                   value= {startValue}
@@ -107,7 +117,11 @@ const styles = {
     },
     button: {
         margin: 15
-    }
+    },
+    textField: {
+      width: 200,
+      height: 100
+    },
 }
 
 export default CodingPage

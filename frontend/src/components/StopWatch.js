@@ -50,7 +50,7 @@ class Stopwatch extends Component {
 
 const styles = {
     Stopwatch: {
-        margin: 10
+        margin: 15
     }
 }
 
