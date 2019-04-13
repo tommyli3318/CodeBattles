@@ -10,13 +10,15 @@ import 'codemirror/theme/material.css';
 
 import axios from 'axios';
 
+import StopWatch from './StopWatch'
+
 require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
 
 export class CodingPage extends Component {
     constructor(props) {
         super(props);
-        this.editorRef = React.createRef();
+        this.stopWatchRef = React.createRef();
       }
 
     state = {
@@ -29,21 +31,32 @@ export class CodingPage extends Component {
         e.preventDefault();
         
         console.log('Test GET')
-        axios.get(`http://localhost:8000/api/CodeProblems/`)
+
+        var config = {
+          headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'}
+        };
+
+        axios.get(`https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem
+        `, config)
             .then(res => {
             const codeProblem = res.data;
             console.log(codeProblem)
             console.log('GET Worked')
             })
         
-        console.log('Test POST')
-        const {submission} = this.state;
-        console.log({submission})
-        axios.post(`http://localhost:8000/api/CodeProblems/`, {submission})
-            .then(res => {
-            console.log(res);
-            console.log(res.data);
-            })
+        // console.log('Test POST')
+        // const {submission} = this.state;
+        // console.log({submission})
+        // axios.post(`http://localhost:8000/api/CodeProblems/`, {submission})
+        //     .then(res => {
+        //     console.log(res);
+        //     console.log(res.data);
+        //     })
+    }
+
+    startTimer = (e) => {
+      e.preventDefault();
+      this.stopWatchRef.current.startTimer()
     }
 
   render() {
@@ -55,7 +68,6 @@ export class CodingPage extends Component {
             <React.Fragment>
                 <AppBar title = 'Code Mirror'></AppBar>
                 <CodeMirror
-                  ref = {this.editorRef}
                   style = {styles.editor}
                   value= {startValue}
                   options={{
@@ -69,6 +81,13 @@ export class CodingPage extends Component {
                     this.setState({submission: value})
                   }}
                 />
+                <StopWatch ref = {this.stopWatchRef}></StopWatch>
+                <RaisedButton
+                    label = 'Ready Up'
+                    primary = {false}
+                    style = {styles.button}
+                    onClick = {this.startTimer}
+                ></RaisedButton>
                 <RaisedButton
                     label = 'Submit Solution'
                     primary = {true}
