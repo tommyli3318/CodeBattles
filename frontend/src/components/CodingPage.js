@@ -12,17 +12,14 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
-//Code Editor
+//Code Mirror
 import {UnControlled as CodeMirror} from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
-
-//Themes
-import CssBaseline from '@material-ui/core/CssBaseline';
-
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 
 require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
@@ -30,6 +27,7 @@ require('codemirror/mode/javascript/javascript');
 export class CodingPage extends Component {
     constructor(props) {
         super(props);
+        //console.log(this.props.roomID)
         this.stopWatchRef = React.createRef();
     }
 
@@ -42,25 +40,12 @@ export class CodingPage extends Component {
     }
 
     getPrompt = () => {
-      //GET prompt from backend
-      console.log('Test GET')
+      console.log('GET Prompt')
         axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`)
             .then(res => {
             const codeProblem = res.data;
             console.log(codeProblem['body'])
             this.setState({prompt: codeProblem['body']})
-            })
-    }
-
-    submit = (e) => {
-        e.preventDefault();
-        //POST code submission to Backend
-        console.log('Test POST')
-        const {submission} = this.state;
-        axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/checkSolution`, {submission})
-            .then(res => {
-            console.log(res);
-            console.log(res.data);
             })
     }
 
@@ -79,15 +64,29 @@ export class CodingPage extends Component {
       this.stopWatchRef.current.startTimer()
     }
 
+    submit = (e) => {
+        e.preventDefault();
+        console.log('POST Code Submission')
+        const {submission} = this.state;
+        axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/checkSolution`, 
+        {code: submission, roomID: this.props.roomID, problem: 'Greatest Value'})
+            .then(res => {
+            console.log(res);
+            console.log(res.data);
+            })
+    }
+
   render() {
     const {startValue} = this.state;
     const {mode} = this.state;
     const { classes } = this.props;
     const {prompt} = this.state;
+    
     return (
         <MuiThemeProvider theme = {theme}>
             <CssBaseline></CssBaseline>
             <React.Fragment>
+                
                 <AppBar position="static">
                       <Toolbar>
                           <Typography variant="title" color="inherit">
@@ -95,6 +94,7 @@ export class CodingPage extends Component {
                           </Typography>
                       </Toolbar>
                 </AppBar>
+                
                 <Grid container>
                   <Grid item sm>
                     <Paper elevation={6}>
@@ -114,6 +114,7 @@ export class CodingPage extends Component {
                       />
                     </Paper>
                   </Grid>
+                  
                   <Grid item sm>
                     <TextField
                         style = {styles.textField}
@@ -129,7 +130,9 @@ export class CodingPage extends Component {
                     />
                   </Grid>
                 </Grid>
+                
                 <StopWatch ref = {this.stopWatchRef}></StopWatch>
+                
                 <Button 
                     variant="contained" 
                     color="secondary" 
@@ -137,6 +140,7 @@ export class CodingPage extends Component {
                     onClick = {this.startSession}>
                     Ready Up
                 </Button>
+                
                 <Button 
                     variant="contained" 
                     color="primary" 

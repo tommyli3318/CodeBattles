@@ -8,7 +8,14 @@ import JoinSession from './JoinSession'
 
 export class ViewSelector extends Component {
     state = {
-        step: 0
+        step: 0,
+        roomID: -1
+    }
+
+    setRoomID = (id) => {
+        this.setState({
+            roomID: id
+        })
     }
 
     nextStepCreate = () => {
@@ -51,6 +58,7 @@ export class ViewSelector extends Component {
                <MakeSession
                prevStep = {this.prevStep}
                nextStepCode = {this.nextStepCode}
+               setRoomID = {this.setRoomID}
                ></MakeSession>
             )
         case 2:
@@ -58,12 +66,14 @@ export class ViewSelector extends Component {
                <JoinSession
                prevStep = {this.prevStep}
                nextStepCode = {this.nextStepCode}
+               setRoomID = {this.setRoomID}
                ></JoinSession>
             )
         case 3:
             return (
                <CodingPage
                prevStep = {this.prevStep}
+               roomID = {this.state.roomID}
                ></CodingPage>
             )
     }

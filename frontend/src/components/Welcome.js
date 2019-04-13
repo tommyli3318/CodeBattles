@@ -10,9 +10,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-import blue from '@material-ui/core/colors/blue.js';
-import grey from '@material-ui/core/colors/grey.js';
-import { generateKeyPair } from 'crypto';
 
 export class Welcome extends Component {
 

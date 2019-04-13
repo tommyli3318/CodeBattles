@@ -9,11 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
-import blue from '@material-ui/core/colors/blue.js';
-import grey from '@material-ui/core/colors/grey.js';
-
 import Grid from '@material-ui/core/Grid';
 
 export class JoinSession extends Component {
@@ -28,7 +24,7 @@ export class JoinSession extends Component {
 
     continue = (e) => {
         e.preventDefault();
-        //POST key user entered to backend
+        console.log('POST Key User Entered')
         console.log(this.state.sessionKey)
         this.props.nextStepCode();
     }
@@ -43,6 +39,7 @@ export class JoinSession extends Component {
       <MuiThemeProvider theme = {theme}>
          <CssBaseline></CssBaseline>
          <React.Fragment>
+            
             <AppBar position="static">
                     <Toolbar>
                         <Typography variant="title" color="inherit">
@@ -50,6 +47,7 @@ export class JoinSession extends Component {
                         </Typography>
                     </Toolbar>
             </AppBar>
+            
             <Grid container>
               <Grid item sm>
                 <TextField
@@ -67,6 +65,7 @@ export class JoinSession extends Component {
                 />
                 </Grid>
             </Grid>
+            
             <Button 
                 variant="contained" 
                 color="secondary" 
@@ -74,6 +73,7 @@ export class JoinSession extends Component {
                 onClick = {this.goBack}>
                 Back
             </Button>
+            
             <Button 
                 variant="contained" 
                 color="primary" 
@@ -102,13 +102,13 @@ const theme = createMuiTheme({
 });
 
 const styles = theme => ({
-    notchedoutline: {
-        borderWidth: "1px",
-        borderColor: "white"
-    },
-    multilinecolor: {
-        color: "white"
-    },
+    // notchedoutline: {
+    //     borderWidth: "1px",
+    //     borderColor: "white"
+    // },
+    // multilinecolor: {
+    //     color: "white"
+    // },
     container: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -137,6 +137,5 @@ const styles = theme => ({
 JoinSession.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 
 export default withStyles(styles)(JoinSession)

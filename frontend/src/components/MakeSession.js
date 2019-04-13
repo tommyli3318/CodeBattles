@@ -9,18 +9,16 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import InputLabel from '@material-ui/core/InputLabel';
 import Grid from '@material-ui/core/Grid';
-import uuid from 'uuid'
 
+import uuid from 'uuid'
 import axios from 'axios';
 
 export class MakeSession extends Component {
     state = {
-        sessID: uuid()
+        roomID: uuid()
     }
 
     goBack = (e) => {
@@ -31,10 +29,13 @@ export class MakeSession extends Component {
     continue = (e) => {
         e.preventDefault();
        
-        //POST generated session key
-        console.log('Test POST')
-        const {ID} = this.state;
-        axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/postSessionKey`, {ID})
+        console.log('POST Session Key')
+        const {roomID} = this.state;
+        
+        this.props.setRoomID(roomID)
+
+        axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/postSessionKey`, 
+            {roomID})
             .then(res => {
             console.log(res);
             console.log(res.data);
@@ -45,11 +46,13 @@ export class MakeSession extends Component {
 
   render() {
     const { classes } = this.props;
-    const {sessID} = this.state;
+    const {roomID} = this.state;
+    
     return (
         <MuiThemeProvider theme = {theme}>
             <CssBaseline></CssBaseline>
             <React.Fragment>
+
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="title" color="inherit">
@@ -57,16 +60,18 @@ export class MakeSession extends Component {
                         </Typography>
                     </Toolbar>
                 </AppBar>
+                
                 <InputLabel
                     className={classes.label}
                     >Session ID
                 </InputLabel>
+                
                 <Grid container>
                     <Grid item sm>
                         <TextField
                             style = {styles.textField}
                             id="outlined-read-only-input"
-                            defaultValue= {sessID}
+                            defaultValue= {roomID}
                             margin="normal"
                             InputProps={{
                                 classes:{
@@ -86,6 +91,7 @@ export class MakeSession extends Component {
                     onClick = {this.goBack}>
                     Back
                 </Button>
+
                 <Button 
                     variant="contained" 
                     color="secondary" 
@@ -108,9 +114,9 @@ const theme = createMuiTheme({
       secondary: {
           main: '#1e88e5'
       },
-      background: {
-        default: "#ffffff"
-      },
+    //   background: {
+    //     default: "#ffffff"
+    //   },
     },
 });
 
@@ -118,13 +124,13 @@ const styles = theme => ({
     label: {
         margin: 50
     },
-    notchedoutline: {
-        borderWidth: "1px",
-        borderColor: "white"
-    },
-    multilinecolor: {
-        color: "white"
-    },
+    // notchedoutline: {
+    //     borderWidth: "1px",
+    //     borderColor: "white"
+    // },
+    // multilinecolor: {
+    //     color: "white"
+    // },
     container: {
       display: 'flex',
       flexWrap: 'wrap',
