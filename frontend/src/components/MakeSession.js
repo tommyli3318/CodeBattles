@@ -10,6 +10,9 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import blue from '@material-ui/core/colors/blue.js';
+import grey from '@material-ui/core/colors/grey.js';
+
 export class MakeSession extends Component {
 
     goBack = (e) => {
@@ -25,7 +28,7 @@ export class MakeSession extends Component {
   render() {
     const { classes } = this.props;
     return (
-        <MuiThemeProvider>
+        <MuiThemeProvider theme = {theme}>
             <React.Fragment>
                 <AppBar position="static">
                     <Toolbar>
@@ -63,6 +66,13 @@ export class MakeSession extends Component {
     )
   }
 }
+
+const theme = createMuiTheme({
+    palette: {
+      primary: blue,
+      secondary: grey
+    },
+});
 
 const styles = theme => ({
     container: {

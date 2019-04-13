@@ -3,7 +3,7 @@ import StopWatch from './StopWatch'
 import axios from 'axios';
 
 //MUI
-import {MuiThemeProvider} from '@material-ui/core/styles'
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +16,9 @@ import TextField from '@material-ui/core/TextField';
 import {UnControlled as CodeMirror} from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
+
+import blue from '@material-ui/core/colors/blue.js';
+import grey from '@material-ui/core/colors/grey.js';
 
 require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
@@ -63,7 +66,7 @@ export class CodingPage extends Component {
     const {mode} = this.state;
     const { classes } = this.props;
     return (
-        <MuiThemeProvider>
+        <MuiThemeProvider theme = {theme}>
             <React.Fragment>
                 <AppBar position="static">
                       <Toolbar>
@@ -116,6 +119,13 @@ export class CodingPage extends Component {
     )
   }
 }
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: grey
+  },
+});
 
 const styles = (theme) => ({
     editor: {
