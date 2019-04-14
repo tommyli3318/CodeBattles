@@ -22,6 +22,13 @@ import {UnControlled as CodeMirror} from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
+//Alerts
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
 
@@ -39,8 +46,19 @@ export class CodingPage extends Component {
         prompt: '',
         promptID: -1,
         snackBarOpen: false,
-        editorReadOnly: true
+        editorReadOnly: true,
+        alertOpen: false,
+        alertSuccessOrFailure: '',
+        alertMessage: ''
     }
+
+    alertHandleClickOpen = () => {
+      this.setState({ alertOpen: true });
+    };
+  
+    alertHandleClose = () => {
+      this.setState({ alertOpen: false });
+    };
 
     infinitePost = () => {
       var p1 = ''
@@ -55,6 +73,7 @@ export class CodingPage extends Component {
         p2 = body["p2ready"]
 
         if (p1===true && p2===true){
+          this.setState({editorReadOnly: false})
           return this.stopWatchRef.current.startTimer()
         } 
         else{
@@ -104,11 +123,10 @@ export class CodingPage extends Component {
               this.setState({promptID: problemInfo["problem"]["problemID"]})
               this.setState({std_in: problemInfo["problem"]["std_in"]})
               this.setState({std_out: problemInfo["problem"]["std_out"]})
+              this.setState({prompt: (problemInfo["problem"]["prompt"] + "\n" + problemInfo["problem"]["examples"])}) 
   
               if (p1 === false || p2 === false){
                 this.infinitePost();
-                this.setState({editorReadOnly: false})
-                this.setState({prompt: (problemInfo["problem"]["prompt"] + "\n" + problemInfo["problem"]["examples"])})
                 return
               }
              
@@ -142,14 +160,24 @@ export class CodingPage extends Component {
             "max_file_size": "1024"
           }
 
+
+//           compile_output: null
+// memory: 6020
+// message: "Exited with error status 1"
+// status: {id: 11, description: "Runtime Error (NZEC)"}
+// stderr: "  File "main.py", line 2↵    ↵              ^↵SyntaxError: unexpected EOF while parsing↵"
+// stdout: null
+// time: "0.028"
+// token: "138fe057-a8f0-44b5-b757-c994554e54aa"
         axios.post("https://api.judge0.com/submissions?wait=true", 
         judgeParams)
             .then(res => {
             console.log(res);
             console.log(res.data);
+            this.setState({alertMessage: res.data["stderr"]})
             })
 
-        this.setState({snackBarOpen: true})
+        this.alertHandleClickOpen()
     }
 
 
@@ -229,7 +257,20 @@ export class CodingPage extends Component {
                     Submit
                 </Button>
 
-                <SimpleSnackbar open = {this.state.snackBarOpen}></SimpleSnackbar>
+                <Dialog
+                  open={this.state.alertOpen}
+                  onClose={this.alertHandleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">{"Success/Failure?"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      Error Message
+                    </DialogContentText>
+                  </DialogContent>
+                </Dialog>
+
             </React.Fragment>
         </MuiThemeProvider>
     )
