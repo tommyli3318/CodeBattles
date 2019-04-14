@@ -29,6 +29,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import Avatars from './Avatars'
+
 require('codemirror/mode/python/python');
 require('codemirror/mode/javascript/javascript');
 
@@ -49,8 +51,15 @@ export class CodingPage extends Component {
         editorReadOnly: true,
         alertOpen: false,
         alertSuccessOrFailure: '',
-        alertMessage: ''
+        alertMessage: '',
+        avatarStep: 0
     }
+
+    // avatarNextStep = () => {
+    //     this.setState({
+    //         avatarStep: avatarStep + 1
+    //     })
+    // }
 
     alertHandleClickOpen = () => {
       this.setState({ alertOpen: true });
@@ -84,7 +93,6 @@ export class CodingPage extends Component {
       });
     
       } 
-
 
     startSession = (e) => {
       e.preventDefault();
@@ -160,23 +168,16 @@ export class CodingPage extends Component {
             "max_file_size": "1024"
           }
 
-
-//           compile_output: null
-// memory: 6020
-// message: "Exited with error status 1"
-// status: {id: 11, description: "Runtime Error (NZEC)"}
-// stderr: "  File "main.py", line 2↵    ↵              ^↵SyntaxError: unexpected EOF while parsing↵"
-// stdout: null
-// time: "0.028"
-// token: "138fe057-a8f0-44b5-b757-c994554e54aa"
         axios.post("https://api.judge0.com/submissions?wait=true", 
         judgeParams)
             .then(res => {
             console.log(res);
             console.log(res.data);
+            console.log(res.data["stderr"])
+            console.log(res.data["status"]["description"])
             this.setState({alertMessage: res.data["stderr"]})
+            this.setState({alertSuccessOrFailure: res.data["status"]["description"]})
             })
-
         this.alertHandleClickOpen()
     }
 
@@ -241,6 +242,8 @@ export class CodingPage extends Component {
                 
                 <StopWatch ref = {this.stopWatchRef}></StopWatch>
                 
+                <Avatars avatarNextStep = {this.avatarNextStep}></Avatars>
+
                 <Button 
                     variant="contained" 
                     color="primary" 
@@ -263,9 +266,9 @@ export class CodingPage extends Component {
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
                 >
-                  <DialogTitle id="alert-dialog-title">{"Success/Failure?"}</DialogTitle>
+                  <DialogTitle id="alert-dialog-title">{this.state.alertSuccessOrFailure}</DialogTitle>
                   <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText value= {this.state.alertMessage}id="alert-dialog-description">
                       Error Message
                     </DialogContentText>
                   </DialogContent>
