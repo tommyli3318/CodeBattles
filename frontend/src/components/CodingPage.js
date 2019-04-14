@@ -1,6 +1,7 @@
 import '../App.css';
 import React, { Component } from 'react'
 import StopWatch from './StopWatch'
+import SimpleSnackbar from './SimpleSnackbar'
 import axios from 'axios';
 
 //MUI
@@ -27,7 +28,6 @@ require('codemirror/mode/javascript/javascript');
 export class CodingPage extends Component {
     constructor(props) {
         super(props);
-        //console.log(this.props.roomID)
         this.stopWatchRef = React.createRef();
     }
 
@@ -37,37 +37,51 @@ export class CodingPage extends Component {
         submission: '',
         status: 'notReady',
         prompt: '',
-        promptID: -1
-    }
-
-    getPrompt = () => {
-      console.log('GET Prompt')
-        axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`)
-            .then(res => {
-            const problemInfo = res.data;
-            console.log(problemInfo["std_out"])
-            
-            this.setState({prompt: (problemInfo["prompt"] + "\n" + problemInfo["examples"])})
-            this.setState({promptID: problemInfo["problemID"]})
-            this.setState({std_in: problemInfo["std_in"]})
-            this.setState({std_out: problemInfo["std_out"]})
-            })
+        promptID: -1,
+        snackBarOpen: false
     }
 
     startSession = (e) => {
       e.preventDefault();
       console.log('POST Ready to backend to start coding')
-      // this.setState({status: 'Ready'})
-      // const {status} = this.state
-      // axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`, 
-      //   {status})
-      //        .then(res => {
-      //        console.log(res);
-      //        console.log(res.data);
-      //        })
-      this.getPrompt()
+      var p1 = '';
+      var data = ''
+      
+      axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/postSession`, 
+          {"roomID": this.props.roomID})
+          .then(res => {
+            console.log(res);
+            
+            const problemInfo = res.data["body"];
+            
+            p1 = problemInfo["p1ready"]
+
+            if (p1){
+              data = {
+                "roomID": this.props.roomID,
+                "p2ready": true
+              }
+            } else {
+              data = {
+                "roomID": this.props.roomID,
+                "p1ready": true
+              }
+            }
+
+            axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/postSession`, 
+                data)
+              .then(res => {
+                console.log(res);
+            });
+           
+            this.setState({prompt: (problemInfo["problem"]["prompt"] + "\n" + problemInfo["problem"]["examples"])})
+            this.setState({promptID: problemInfo["problem"]["problemID"]})
+            this.setState({std_in: problemInfo["problem"]["std_in"]})
+            this.setState({std_out: problemInfo["problem"]["std_out"]})
+          });
+
       this.stopWatchRef.current.startTimer()
-    }
+  }
 
     submit = (e) => {
         e.preventDefault();
@@ -75,7 +89,6 @@ export class CodingPage extends Component {
         const {submission} = this.state;
         const{std_in} = this.state;
         const {std_out} = this.state
-        console.log({submission})
 
         const judgeParams = {
             "source_code": submission,
@@ -100,6 +113,8 @@ export class CodingPage extends Component {
             console.log(res);
             console.log(res.data);
             })
+
+        this.setState({snackBarOpen: true})
     }
 
   render() {
@@ -175,6 +190,8 @@ export class CodingPage extends Component {
                     onClick = {this.submit}>
                     Submit
                 </Button>
+
+                <SimpleSnackbar open = {this.state.snackBarOpen}></SimpleSnackbar>
             </React.Fragment>
         </MuiThemeProvider>
     )
@@ -218,3 +235,18 @@ CodingPage.propTypes = {
 };
 
 export default withStyles(styles)(CodingPage)
+
+
+// getPrompt = () => {
+    //   console.log('GET Prompt')
+    //     axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`)
+    //         .then(res => {
+    //         const problemInfo = res.data;
+    //         console.log(problemInfo["std_out"])
+            
+    //         this.setState({prompt: (problemInfo["prompt"] + "\n" + problemInfo["examples"])})
+    //         this.setState({promptID: problemInfo["problemID"]})
+    //         this.setState({std_in: problemInfo["std_in"]})
+    //         this.setState({std_out: problemInfo["std_out"]})
+    //         })
+    // }

@@ -23,7 +23,7 @@ export class JoinSession extends Component {
         e.preventDefault();
         this.props.prevStep();
     }
-//16df
+//31bdd7
     continue = (e) => {
         e.preventDefault();
         console.log('POST Key User Entered')
@@ -32,14 +32,21 @@ export class JoinSession extends Component {
             {"roomID": roomID})
             
             .then(res => {
-            console.log(res.data);
-            console.log(typeof res.data);
+            //console.log(res.data);
+
             if (res.data === "true"){
+              const data = {
+                "roomID": roomID,
+                "bothjoined": true
+              }
+              axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/postSession`, 
+              data)
+
+              this.props.setRoomID(roomID)
               this.props.nextStepCode();
-              return
+            
             }
             })
-        
     }
     
     handleChange = () => event => {
