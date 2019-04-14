@@ -44,11 +44,13 @@ export class CodingPage extends Component {
       console.log('GET Prompt')
         axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`)
             .then(res => {
-            const codeProblem = res.data;
-            console.log(codeProblem['body'])
-            console.log(typeof codeProblem['body'])
-            this.setState({prompt: codeProblem['body']})
-            //this.setState({prompt: codeProblem['body']})
+            const problemInfo = res.data;
+            console.log(problemInfo["std_out"])
+            
+            this.setState({prompt: (problemInfo["prompt"] + "\n" + problemInfo["examples"])})
+            this.setState({promptID: problemInfo["problemID"]})
+            this.setState({std_in: problemInfo["std_in"]})
+            this.setState({std_out: problemInfo["std_out"]})
             })
     }
 
@@ -71,14 +73,16 @@ export class CodingPage extends Component {
         e.preventDefault();
         console.log('POST Code Submission')
         const {submission} = this.state;
+        const{std_in} = this.state;
+        const {std_out} = this.state
         console.log({submission})
 
         const judgeParams = {
             "source_code": submission,
             "language_id": "34", 
             "number_of_runs": "1",
-            "stdin": "[10,2,129,3,5]",
-            "expected_output": "hi",
+            "stdin": std_in,
+            "expected_output": std_out,
             "cpu_time_limit": "2",
             "cpu_extra_time": "0.5",
             "wall_time_limit": "5",
@@ -90,7 +94,6 @@ export class CodingPage extends Component {
             "max_file_size": "1024"
           }
       
-        //console.log(submission)
         axios.post("https://api.judge0.com/submissions?wait=true", 
         judgeParams)
             .then(res => {

@@ -12,25 +12,38 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 
+import axios from 'axios'
+
 export class JoinSession extends Component {
      state = {
-        sessionKey: ''
+        roomID: ''
     }
 
     goBack = (e) => {
         e.preventDefault();
         this.props.prevStep();
     }
-
+//16df
     continue = (e) => {
         e.preventDefault();
         console.log('POST Key User Entered')
-        console.log(this.state.sessionKey)
-        this.props.nextStepCode();
+        const {roomID} = this.state;
+         axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/matchSessionKey`, 
+            {"roomID": roomID})
+            
+            .then(res => {
+            console.log(res.data);
+            console.log(typeof res.data);
+            if (res.data === "true"){
+              this.props.nextStepCode();
+              return
+            }
+            })
+        
     }
     
     handleChange = () => event => {
-        this.setState({ sessionKey: event.target.value });
+        this.setState({ roomID: event.target.value });
     };
 
   render() {

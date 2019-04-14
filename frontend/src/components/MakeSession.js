@@ -19,7 +19,7 @@ import axios from 'axios';
 
 export class MakeSession extends Component {
     state = {
-        roomID: uuid()
+        roomID: uuid().substring(0,6)
     }
 
     goBack = (e) => {
@@ -39,7 +39,6 @@ export class MakeSession extends Component {
             {roomID})
             .then(res => {
             console.log(res);
-            console.log(res.data);
             })
         
         this.props.nextStepCode();
