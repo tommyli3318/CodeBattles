@@ -41,6 +41,7 @@ export class CodingPage extends Component {
         snackBarOpen: false
     }
 
+    
     infinitePost = () => {
       var p1 = ''
       var p2 = ''
@@ -64,6 +65,7 @@ export class CodingPage extends Component {
       });
     
       } 
+
 
     startSession = (e) => {
       e.preventDefault();
@@ -110,12 +112,9 @@ export class CodingPage extends Component {
               }
               
               this.stopWatchRef.current.startTimer()
-            });
-           
-           
-            
+            }); 
           });
-  }
+  };
 
 
     submit = (e) => {
@@ -141,7 +140,7 @@ export class CodingPage extends Component {
             "enable_per_process_and_thread_memory_limit": "true",
             "max_file_size": "1024"
           }
-      
+
         axios.post("https://api.judge0.com/submissions?wait=true", 
         judgeParams)
             .then(res => {
@@ -151,6 +150,7 @@ export class CodingPage extends Component {
 
         this.setState({snackBarOpen: true})
     }
+
 
   render() {
     const {startValue} = this.state;
