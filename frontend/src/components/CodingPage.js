@@ -38,10 +38,10 @@ export class CodingPage extends Component {
         status: 'notReady',
         prompt: '',
         promptID: -1,
-        snackBarOpen: false
+        snackBarOpen: false,
+        editorReadOnly: true
     }
 
-    
     infinitePost = () => {
       var p1 = ''
       var p2 = ''
@@ -101,16 +101,17 @@ export class CodingPage extends Component {
               .then(res => {
                 console.log(res);
 
-              this.setState({prompt: (problemInfo["problem"]["prompt"] + "\n" + problemInfo["problem"]["examples"])})
               this.setState({promptID: problemInfo["problem"]["problemID"]})
               this.setState({std_in: problemInfo["problem"]["std_in"]})
               this.setState({std_out: problemInfo["problem"]["std_out"]})
   
               if (p1 === false || p2 === false){
                 this.infinitePost();
+                this.setState({editorReadOnly: false})
+                this.setState({prompt: (problemInfo["problem"]["prompt"] + "\n" + problemInfo["problem"]["examples"])})
                 return
               }
-              
+             
               this.stopWatchRef.current.startTimer()
             }); 
           });
@@ -157,6 +158,7 @@ export class CodingPage extends Component {
     const {mode} = this.state;
     const { classes } = this.props;
     const {prompt} = this.state;
+    const {editorReadOnly} = this.state;
     
     return (
         <MuiThemeProvider theme = {theme}>
@@ -182,7 +184,8 @@ export class CodingPage extends Component {
                           theme: 'material',
                           lineNumbers: true,
                           smartIndent: true,
-                          autocorrect: true
+                          autocorrect: true,
+                          readOnly: editorReadOnly
                         }}
                         onChange={(editor, data, value) => {
                           
