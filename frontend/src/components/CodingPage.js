@@ -1,7 +1,6 @@
 import '../App.css';
 import React, { Component } from 'react'
 import StopWatch from './StopWatch'
-import SimpleSnackbar from './SimpleSnackbar'
 import axios from 'axios';
 
 //MUI
@@ -21,13 +20,6 @@ import Paper from '@material-ui/core/Paper';
 import {UnControlled as CodeMirror} from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
-
-//Alerts
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Avatars from './Avatars'
 
@@ -50,7 +42,6 @@ export class CodingPage extends Component {
         snackBarOpen: false,
         editorReadOnly: true,
         alertOpen: false,
-        alertSuccessOrFailure: '',
         alertMessage: '',
         avatarStep: 0
     }
@@ -91,7 +82,6 @@ export class CodingPage extends Component {
           window.setTimeout(this.infinitePost, 1000);
         }
       });
-    
       } 
 
     startSession = (e) => {
@@ -173,10 +163,7 @@ export class CodingPage extends Component {
             .then(res => {
             console.log(res);
             console.log(res.data);
-            console.log(res.data["stderr"])
-            console.log(res.data["status"]["description"])
-            this.setState({alertMessage: res.data["stderr"]})
-            this.setState({alertSuccessOrFailure: res.data["status"]["description"]})
+            this.setState({alertMessage: res.data["status"]["description"] + '\n' + res.data["stderr"]})
             })
         this.alertHandleClickOpen()
     }
@@ -188,6 +175,7 @@ export class CodingPage extends Component {
     const { classes } = this.props;
     const {prompt} = this.state;
     const {editorReadOnly} = this.state;
+    const {alertMessage} = this.state;
     
     return (
         <MuiThemeProvider theme = {theme}>
@@ -233,10 +221,26 @@ export class CodingPage extends Component {
                         InputProps={{
                             readOnly: true,
                             multiline: true,
-                            rows: 12
+                            rows: 12,
+                            fullWidth: true
                         }}
                         variant="outlined"
                     />
+                  </Grid>
+                  <Grid item sm>
+                      <TextField
+                      style = {styles.textField}
+                        id="outlined-read-only-input"
+                        value= {alertMessage}
+                        margin="normal"
+                        InputProps={{
+                            readOnly: true,
+                            multiline: true,
+                            rows: 12,
+                            fullWidth: true
+                        }}
+                        variant="outlined"
+                    ></TextField>
                   </Grid>
                 </Grid>
                 
@@ -249,7 +253,7 @@ export class CodingPage extends Component {
                     color="primary" 
                     className={classes.button}
                     onClick = {this.startSession}>
-                    Ready Up
+                    Ready
                 </Button>
                 
                 <Button 
@@ -259,20 +263,6 @@ export class CodingPage extends Component {
                     onClick = {this.submit}>
                     Submit
                 </Button>
-
-                <Dialog
-                  open={this.state.alertOpen}
-                  onClose={this.alertHandleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">{this.state.alertSuccessOrFailure}</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText value= {this.state.alertMessage}id="alert-dialog-description">
-                      Error Message
-                    </DialogContentText>
-                  </DialogContent>
-                </Dialog>
 
             </React.Fragment>
         </MuiThemeProvider>
@@ -286,11 +276,8 @@ const theme = createMuiTheme({
         main: '#6a1b9a'
     },
     secondary: {
-        main: '#1e88e5'
+        main: '#000000'
     },
-    // background: {
-    //   default: "#000000"
-    // },
   },
 });
 
@@ -317,18 +304,3 @@ CodingPage.propTypes = {
 };
 
 export default withStyles(styles)(CodingPage)
-
-
-// getPrompt = () => {
-    //   console.log('GET Prompt')
-    //     axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/getCodingProblem`)
-    //         .then(res => {
-    //         const problemInfo = res.data;
-    //         console.log(problemInfo["std_out"])
-            
-    //         this.setState({prompt: (problemInfo["prompt"] + "\n" + problemInfo["examples"])})
-    //         this.setState({promptID: problemInfo["problemID"]})
-    //         this.setState({std_in: problemInfo["std_in"]})
-    //         this.setState({std_out: problemInfo["std_out"]})
-    //         })
-    // }

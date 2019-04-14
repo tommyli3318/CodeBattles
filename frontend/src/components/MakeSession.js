@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 //MUI
-// url("./webfonts_Yantramanav-Light/") format("opentype"),
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -76,8 +75,6 @@ export class MakeSession extends Component {
                             InputProps={{
                                 classes:{
                                     readOnly: true,
-                                    // input: classes.multilinecolor,
-                                    // notchedoutline: classes.notchedoutline
                                 }
                             }}
                         />
@@ -112,11 +109,8 @@ const theme = createMuiTheme({
           main: '#6a1b9a'
       },
       secondary: {
-          main: '#1e88e5'
+          main: '#000000'
       },
-    //   background: {
-    //     default: "#ffffff"
-    //   },
     },
 });
 
@@ -124,13 +118,6 @@ const styles = theme => ({
     label: {
         margin: 50
     },
-    // notchedoutline: {
-    //     borderWidth: "1px",
-    //     borderColor: "white"
-    // },
-    // multilinecolor: {
-    //     color: "white"
-    // },
     container: {
       display: 'flex',
       flexWrap: 'wrap',
