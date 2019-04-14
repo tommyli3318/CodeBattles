@@ -41,10 +41,35 @@ export class CodingPage extends Component {
         snackBarOpen: false
     }
 
+    infinitePost = () => {
+      var p1 = ''
+      var p2 = ''
+      
+      axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/postSession`, 
+      {"roomID":this.props.roomID})
+      .then(res => {
+        console.log(res)
+        const body = res.data["body"]
+        p1 = body["p1ready"]
+        p2 = body["p2ready"]
+
+        if (p1===true && p2===true){
+          return this.stopWatchRef.current.startTimer()
+        } 
+        else{
+          console.log(p1)
+          console.log(p2)
+          window.setTimeout(this.infinitePost, 1000);
+        }
+      });
+    
+      } 
+
     startSession = (e) => {
       e.preventDefault();
       console.log('POST Ready to backend to start coding')
       var p1 = '';
+      var p2 = '';
       var data = ''
       
       axios.post(`${'https://cors-anywhere.herokuapp.com/'}https://741zh4iv3j.execute-api.us-east-1.amazonaws.com/default/postSession`, 
@@ -55,6 +80,7 @@ export class CodingPage extends Component {
             const problemInfo = res.data["body"];
             
             p1 = problemInfo["p1ready"]
+            p2 = problemInfo["p2ready"]
 
             if (p1){
               data = {
@@ -72,16 +98,25 @@ export class CodingPage extends Component {
                 data)
               .then(res => {
                 console.log(res);
+
+              this.setState({prompt: (problemInfo["problem"]["prompt"] + "\n" + problemInfo["problem"]["examples"])})
+              this.setState({promptID: problemInfo["problem"]["problemID"]})
+              this.setState({std_in: problemInfo["problem"]["std_in"]})
+              this.setState({std_out: problemInfo["problem"]["std_out"]})
+  
+              if (p1 === false || p2 === false){
+                this.infinitePost();
+                return
+              }
+              
+              this.stopWatchRef.current.startTimer()
             });
            
-            this.setState({prompt: (problemInfo["problem"]["prompt"] + "\n" + problemInfo["problem"]["examples"])})
-            this.setState({promptID: problemInfo["problem"]["problemID"]})
-            this.setState({std_in: problemInfo["problem"]["std_in"]})
-            this.setState({std_out: problemInfo["problem"]["std_out"]})
+           
+            
           });
-
-      this.stopWatchRef.current.startTimer()
   }
+
 
     submit = (e) => {
         e.preventDefault();
