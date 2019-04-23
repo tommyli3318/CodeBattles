@@ -4,6 +4,10 @@ CodeBattle is (currently) a one-on-one coding challenge game. After signaling th
 ## Inspirations ##
 Ever had a fight with another friend about who the better coder is? Take yourselves to a CodeBattle challenges to decide it all!
 
+## How we built it ##
+Frontend: React.js, material UI
+Backend: AWS serverless lambdas, Amazon DynamoDB
+
 ## Walkthrough Gifs ##
 <img src = 'http://g.recordit.co/rMCdYGTBnx.gif' width = 800><br><br>
 <img src = 'http://g.recordit.co/nft3i6JnE9.gif' width = 800><br>
