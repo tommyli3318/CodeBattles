@@ -7,3 +7,7 @@ Ever had a fight with another friend about who the better coder is? Take yoursel
 ## Walkthrough Gifs ##
 <img src = 'http://g.recordit.co/rMCdYGTBnx.gif' width = 800><br><br>
 <img src = 'http://g.recordit.co/nft3i6JnE9.gif' width = 800><br>
+
+## Devpost ##
+Check out our devpost for more details!
+https://devpost.com/software/codebattle-c96yms
