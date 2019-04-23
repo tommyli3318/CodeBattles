@@ -6,6 +6,7 @@ Ever had a fight with another friend about who the better coder is? Take yoursel
 
 ## How we built it ##
 Frontend: React.js, material UI
+
 Backend: AWS serverless lambdas, Amazon DynamoDB
 
 ## Walkthrough Gifs ##
