@@ -9,6 +9,8 @@ Frontend: React.js, material UI
 
 Backend: AWS serverless lambdas, Amazon DynamoDB
 
+Judge0 API for code compilation
+
 ## Walkthrough Gifs ##
 <img src = 'http://g.recordit.co/rMCdYGTBnx.gif' width = 800><br><br>
 <img src = 'http://g.recordit.co/nft3i6JnE9.gif' width = 800><br>
